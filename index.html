@@ -5,348 +5,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>語日俱進 - growdaily</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap');
-        
-        body {
-            font-family: 'Noto Sans TC', system-ui, sans-serif;
-        }
-        
-        .jp-text {
-            font-family: 'Noto Serif JP', serif;
-        }
-
-        .hero-bg {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-        }
-
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .card-hover:hover {
-            transform: scale(1.03) translateY(-8px);
-        }
-
-        .kana {
-            color: #ec4899;
-            font-size: 1.15em;
-        }
-
-        .nav-link {
-            position: relative;
-        }
-        
-        .nav-link:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-color: #ec4899;
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover:after {
-            width: 100%;
-        }
-
-        table {
-            border-collapse: collapse;
-        }
-        
-        tr:hover {
-            background-color: #f3e8ff;
-        }
+        body { font-family: 'Noto Sans TC', system-ui, sans-serif; }
+        .jp-text { font-family: 'Noto Serif JP', serif; }
+        .sidebar-link { transition: all 0.2s; }
+        .sidebar-link.active { background-color: #f3e8ff; color: #6b21a8; font-weight: 500; }
     </style>
 </head>
-<body class="bg-zinc-50 text-zinc-800">
-    <!-- Top Navigation -->
-    <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <div class="w-11 h-11 bg-gradient-to-br from-pink-500 to-violet-600 text-white rounded-3xl flex items-center justify-center text-4xl shadow-inner">🌸</div>
-                <div>
-                    <span class="text-3xl font-bold tracking-tighter text-violet-700">語日俱進</span>
-                    <span class="block text-[10px] text-pink-400 -mt-1 font-medium">GROW DAILY</span>
+<body class="bg-zinc-100">
+    <div class="flex h-screen">
+        <!-- 側欄 -->
+        <div class="w-72 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-6 border-b">
+                <div class="flex items-center gap-3">
+                    <span class="text-4xl">🌸</span>
+                    <div>
+                        <span class="text-2xl font-bold text-violet-700">語日俱進</span>
+                        <span class="block text-xs text-pink-500 -mt-1">TOOLBOOK</span>
+                    </div>
                 </div>
             </div>
             
-            <div class="flex items-center gap-10 text-sm font-medium">
-                <a href="#" onclick="navigateTo('home')" class="nav-link text-violet-700">首頁</a>
-                <a href="#" onclick="navigateTo('toolbook')" class="nav-link hover:text-pink-600">工具書</a>
-                <a href="#" onclick="navigateTo('practice')" class="nav-link hover:text-pink-600">練習</a>
-                <a href="https://hackmd.io/@HelloBernie/SyuziiWkMg" target="_blank" class="nav-link hover:text-pink-600">共筆資源</a>
+            <div class="flex-1 overflow-auto p-3">
+                <div onclick="switchPage('home')" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer mb-1">
+                    <span class="text-lg">🏠</span>
+                    <span>首頁</span>
+                </div>
+                <div onclick="switchPage('hiki')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer mb-1">
+                    <span class="text-lg">🌸</span>
+                    <span>助數詞 - 匹（ひき）</span>
+                </div>
+                <div onclick="switchPage('godan')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer mb-1">
+                    <span class="text-lg">📋</span>
+                    <span>五段動詞與て形</span>
+                </div>
+                <div onclick="switchPage('resources')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer">
+                    <span class="text-lg">📚</span>
+                    <span>推薦學習網站</span>
+                </div>
             </div>
             
-            <div class="flex items-center gap-3">
-                <div class="text-xs px-5 py-2.5 bg-white border border-violet-200 rounded-3xl text-violet-600 font-medium flex items-center gap-2">
-                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                    N5 • N4 進行中
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-8 pt-10" id="main-content">
-        
-        <!-- Home Page -->
-        <div id="page-home">
-            <div class="hero-bg text-white rounded-3xl p-16 mb-16 text-center relative overflow-hidden">
-                <div class="absolute inset-0 bg-[radial-gradient(at_top_right,#ffffff15_0%,transparent_50%)]"></div>
-                <div class="relative">
-                    <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2 rounded-3xl mb-6 text-sm">
-                        <span class="text-yellow-200">🌱</span>
-                        <span>每天一點 • 一起進步</span>
-                    </div>
-                    <h1 class="text-6xl font-bold leading-tight mb-6">
-                        從零開始的日文學習社群
-                    </h1>
-                    <p class="max-w-xl mx-auto text-xl text-white/90">
-                        這裡沒有壓力，只有陪伴。<br>
-                        每天學習一點點，一起「語日俱進」。
-                    </p>
-                    <button onclick="navigateTo('toolbook')" 
-                            class="mt-10 px-12 py-5 bg-white text-violet-700 rounded-3xl font-semibold text-lg hover:bg-amber-100 transition-all inline-flex items-center gap-3 shadow-xl">
-                        <span>開始學習助數詞</span>
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-12 gap-8">
-                <!-- Featured Content -->
-                <div class="col-span-8">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-semibold flex items-center gap-3">
-                            <span class="text-pink-500">🌸</span>
-                            今日重點：助數詞「匹（ひき）」
-                        </h2>
-                        <span onclick="navigateTo('toolbook')" 
-                              class="text-pink-500 text-sm flex items-center gap-2 cursor-pointer hover:underline">
-                            完整學習 <i class="fa-solid fa-chevron-right text-xs"></i>
-                        </span>
-                    </div>
-                    
-                    <div onclick="navigateTo('toolbook'); setTimeout(() => showHikiDetail(), 300)" 
-                         class="bg-white border border-pink-100 rounded-3xl p-10 card-hover cursor-pointer">
-                        <div class="flex gap-12">
-                            <div class="flex-1">
-                                <div class="inline px-4 py-1 bg-pink-100 text-pink-600 text-xs font-medium rounded-3xl">N4 ∼ N3</div>
-                                <div class="jp-text text-5xl font-bold mt-6 leading-none">匹（ひき）</div>
-                                <div class="text-xl text-zinc-500 mt-1">小動物・魚・昆蟲的計數</div>
-                                
-                                <div class="mt-10 space-y-6">
-                                    <div class="flex gap-6">
-                                        <div class="text-4xl font-bold text-pink-500">1</div>
-                                        <div>
-                                            <div class="kana text-3xl">いっぴき</div>
-                                            <div class="text-sm text-zinc-500">一隻狗、一隻貓</div>
-                                        </div>
-                                    </div>
-                                    <div class="flex gap-6">
-                                        <div class="text-4xl font-bold text-pink-500">3</div>
-                                        <div>
-                                            <div class="kana text-3xl">さんびき</div>
-                                            <div class="text-sm text-zinc-500">三隻兔子</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="w-px bg-zinc-100"></div>
-                            
-                            <div class="flex-1 text-sm leading-relaxed text-zinc-600 pt-8">
-                                日文數字後面的助數詞會因為發音習慣而改變。<br><br>
-                                最重要的是記住這四個特殊變化：<br>
-                                <span class="font-medium text-pink-600">いっぴき・さんびき・ろっぴき・はっぴき</span><br><br>
-                                其他大多直接念「～ひき」。
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Side Motivation -->
-                <div class="col-span-4 space-y-6">
-                    <div class="bg-white rounded-3xl p-8 h-full border border-violet-100">
-                        <div class="text-6xl mb-6">📆</div>
-                        <div class="font-medium text-xl">每天打卡</div>
-                        <div class="text-zinc-500 mt-3">和夥伴一起堅持學習，累積屬於自己的進度曲線。</div>
-                        <div class="mt-auto pt-12 text-xs text-emerald-500 font-medium">87 人正在一起學習中 →</div>
-                    </div>
-                    
-                    <div class="bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white rounded-3xl p-8">
-                        <div class="text-sm opacity-75">下一個目標</div>
-                        <div class="text-2xl font-semibold mt-2">熟悉 20 個常用助數詞</div>
-                        <div class="h-2 bg-white/30 rounded-full mt-8">
-                            <div class="h-2 w-3/5 bg-white rounded-full"></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="p-4 text-xs text-gray-400 border-t">
+                growdaily • 資料來自 data/ 資料夾
             </div>
         </div>
 
-        <!-- Toolbook Page -->
-        <div id="page-toolbook" class="hidden">
-            <div class="flex justify-between items-center mb-10">
-                <div>
-                    <h1 class="text-4xl font-bold text-violet-700">助數詞工具書</h1>
-                    <p class="text-zinc-500">從基礎開始，逐步掌握日文計數的正確說法</p>
-                </div>
-                <div class="flex gap-2">
-                    <div onclick="filterByLevel('all')" 
-                         class="level-tab active px-6 py-2 text-sm rounded-3xl border border-violet-200 cursor-pointer">全部</div>
-                    <div onclick="filterByLevel('N4')" 
-                         class="level-tab px-6 py-2 text-sm rounded-3xl border border-violet-200 cursor-pointer">N4</div>
-                    <div onclick="filterByLevel('N3')" 
-                         class="level-tab px-6 py-2 text-sm rounded-3xl border border-violet-200 cursor-pointer">N3</div>
-                </div>
-            </div>
-
-            <div id="hiki-detail" class="bg-white rounded-3xl shadow-sm border border-zinc-100 p-12"></div>
-        </div>
-
-        <!-- Practice Page -->
-        <div id="page-practice" class="hidden max-w-2xl mx-auto">
-            <div class="text-center py-12">
-                <div class="text-7xl mb-8">🧠</div>
-                <h2 class="text-3xl font-bold mb-4">小測驗模式</h2>
-                <p class="text-zinc-600 max-w-xs mx-auto">練習「匹」的正確發音。未來會加入更多互動練習題。</p>
-                <button onclick="startQuiz()" 
-                        class="mt-12 px-14 py-6 bg-violet-600 text-white rounded-3xl text-lg font-medium">
-                    開始練習「匹（ひき）」
-                </button>
-            </div>
+        <!-- 主內容區 -->
+        <div class="flex-1 overflow-auto bg-zinc-50 p-10" id="main-content">
+            <!-- JavaScript will fill this -->
         </div>
     </div>
 
-    <footer class="bg-white border-t mt-20 py-12">
-        <div class="max-w-7xl mx-auto px-8 text-center text-xs text-zinc-400">
-            語日俱進社群 • 一起從零開始，每天進步一點<br>
-            所有內容皆由學習夥伴共同整理 • 歡迎一起參與共筆
-        </div>
-    </footer>
-
     <script>
-        function navigateTo(page) {
-            document.querySelectorAll('#main-content > div').forEach(div => {
-                div.classList.add('hidden');
-            });
-            document.getElementById(`page-${page}`).classList.remove('hidden');
-            
-            if (page === 'toolbook') {
-                showHikiDetail();
-            }
-        }
-        
-        function showHikiDetail() {
-            const container = document.getElementById('hiki-detail');
-            container.innerHTML = `
-                <div class="max-w-4xl mx-auto">
-                    <div class="flex justify-between">
-                        <div>
-                            <span class="px-6 py-2 bg-pink-100 text-pink-600 rounded-3xl text-sm font-medium">N4 ∼ N3 • 助數詞</span>
-                            <h1 class="jp-text text-5xl font-bold mt-6">匹（ひき）</h1>
-                            <p class="text-xl text-zinc-500">用來數小動物、魚、昆蟲</p>
+        const pages = {
+            home: `
+                <div class="max-w-2xl">
+                    <h1 class="text-5xl font-bold text-violet-700 mb-6">歡迎來到語日俱進工具書</h1>
+                    <p class="text-xl text-gray-600">這裡收集了結構化的日文學習內容，幫助你從零開始系統學習。</p>
+                    <p class="mt-8 text-sm text-gray-500">點擊左側欄目即可切換不同章節</p>
+                </div>
+            `,
+
+            godan: `
+                <div>
+                    <h1 class="text-4xl font-bold mb-8">五段動詞與て形音變總整理</h1>
+                    <div class="prose text-lg">
+                        <p class="text-2xl text-violet-700 mb-10">日語て形的變化看似不規則，但其實可以用兩個音韻機制理解：</p>
+                        <div class="grid grid-cols-2 gap-8 mb-12">
+                            <div class="bg-purple-50 p-6 rounded-3xl">
+                                <strong class="block text-purple-700 mb-2">1. 連濁（れんだく）</strong>
+                                清音變濁音，讓兩個音節更容易連接
+                            </div>
+                            <div class="bg-pink-50 p-6 rounded-3xl">
+                                <strong class="block text-pink-700 mb-2">2. 鼻音化</strong>
+                                子音自然變成「ん」
+                            </div>
                         </div>
-                        <div class="text-right text-sm">
-                            <div class="text-emerald-500">最後更新 2026-05-13</div>
-                        </div>
+                        <h3 class="font-bold text-2xl mb-6">て形變化總表</h3>
+                        <table class="w-full border-collapse text-left text-base">
+                            <tr class="bg-gray-100"><th class="p-4">結尾</th><th class="p-4">て形</th><th class="p-4">音變類型</th></tr>
+                            <tr class="border-b"><td class="p-4">く</td><td class="jp-text p-4">いて</td><td class="p-4">イ音便</td></tr>
+                            <tr class="border-b"><td class="p-4">ぐ</td><td class="jp-text p-4">いで</td><td class="p-4">連濁</td></tr>
+                            <tr class="border-b"><td class="p-4">む・ぶ・ぬ</td><td class="jp-text p-4">んで</td><td class="p-4">鼻音化</td></tr>
+                            <tr class="border-b"><td class="p-4">つ・る・う</td><td class="jp-text p-4">って</td><td class="p-4">促音便</td></tr>
+                        </table>
                     </div>
-                    
-                    <div class="prose prose-zinc max-w-none mt-12">
-                        <div class="bg-pink-50 border border-pink-100 p-8 rounded-3xl mb-12">
-                            <strong class="block text-pink-500 mb-3 text-sm tracking-widest">一句話記住</strong>
-                            <p class="text-xl leading-relaxed">數字後面的「ひき」會因為發音習慣改變，最重要的是記住 <span class="font-semibold text-pink-600">いっぴき、さんびき、ろっぴき、はっぴき</span> 這四個。</p>
+                </div>
+            `,
+
+            hiki: `
+                <div>
+                    <h1 class="text-4xl font-bold mb-6 jp-text">匹（ひき）</h1>
+                    <p class="text-xl text-pink-600 mb-8">用來數小動物、魚、昆蟲的助數詞</p>
+                    <div class="bg-white p-8 rounded-3xl">
+                        <h3 class="font-bold mb-6">必背特殊形</h3>
+                        <p class="text-4xl jp-text text-pink-500">いっぴき・さんびき・ろっぴき・はっぴき</p>
+                    </div>
+                </div>
+            `,
+
+            resources: `
+                <div>
+                    <h1 class="text-4xl font-bold mb-8">推薦學習網站</h1>
+                    <div class="space-y-6">
+                        <div class="bg-white p-8 rounded-3xl">
+                            <h3 class="font-bold">1. にほんごのふね</h3>
+                            <p class="text-gray-600">文法與日本文化說明非常詳細</p>
                         </div>
-                        
-                        <h3 class="text-2xl font-semibold mb-6 flex items-center gap-3">
-                            <span class="text-3xl">📊</span> 完整變化表
-                        </h3>
-                        
-                        <div class="overflow-x-auto mb-16">
-                            <table class="w-full text-left">
-                                <thead>
-                                    <tr class="border-b text-xs text-zinc-400">
-                                        <th class="py-5 font-normal">數字</th>
-                                        <th class="py-5 font-normal">正確唸法</th>
-                                        <th class="py-5 font-normal">例子</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-base divide-y">
-                                    <tr><td class="py-6 font-medium">1 匹</td><td class="jp-text font-semibold kana">いっぴき</td><td class="text-zinc-500">一隻狗</td></tr>
-                                    <tr><td class="py-6 font-medium">2 匹</td><td class="jp-text">にひき</td><td class="text-zinc-500">兩隻貓</td></tr>
-                                    <tr><td class="py-6 font-medium">3 匹</td><td class="jp-text font-semibold kana">さんびき</td><td class="text-zinc-500">三隻兔子</td></tr>
-                                    <tr><td class="py-6 font-medium">6 匹</td><td class="jp-text font-semibold kana">ろっぴき</td><td class="text-zinc-500">六隻魚</td></tr>
-                                    <tr><td class="py-6 font-medium">8 匹</td><td class="jp-text font-semibold kana">はっぴき</td><td class="text-zinc-500">八隻昆蟲</td></tr>
-                                    <tr><td class="py-6 font-medium">其他</td><td class="jp-text">～ひき</td><td class="text-zinc-500">4、5、7、9 通常維持原音</td></tr>
-                                </tbody>
-                            </table>
+                        <div class="bg-white p-8 rounded-3xl">
+                            <h3 class="font-bold">2. NHK News Easy</h3>
+                            <p class="text-gray-600">每天閱讀簡易新聞，練習閱讀能力</p>
                         </div>
-                        
-                        <h3 class="text-2xl font-semibold mb-6">實用記憶法</h3>
-                        <div class="grid grid-cols-2 gap-6">
-                            <div class="bg-white border p-7 rounded-3xl">
-                                <div class="font-medium text-pink-500 mb-4">必背四個特殊形</div>
-                                <div class="space-y-4 text-lg">
-                                    <div>いっぴき（1）</div>
-                                    <div>さんびき（3）</div>
-                                    <div>ろっぴき（6）</div>
-                                    <div>はっぴき（8）</div>
-                                </div>
-                            </div>
-                            <div class="bg-white border p-7 rounded-3xl">
-                                <div class="font-medium text-pink-500 mb-4">小提醒</div>
-                                <ul class="list-disc pl-5 space-y-3 text-zinc-600">
-                                    <li>1、6、8、10 容易變促音（っぴき）</li>
-                                    <li>3（さん）容易變濁音（びき）</li>
-                                    <li>其他大多直接念「ひき」</li>
-                                </ul>
-                            </div>
+                        <div class="bg-white p-8 rounded-3xl">
+                            <h3 class="font-bold">3. ひろがるにほんご</h3>
+                            <p class="text-gray-600">主題式學習</p>
                         </div>
-                        
-                        <div class="mt-16 bg-zinc-900 text-white p-10 rounded-3xl">
-                            <h4 class="text-pink-300 mb-6 text-sm font-medium tracking-widest">練習例句</h4>
-                            <div class="space-y-8 text-lg">
-                                <div class="flex gap-6">
-                                    <div class="w-8 h-8 bg-pink-500 text-white rounded-2xl flex items-center justify-center flex-shrink-0">1</div>
-                                    <div>いぬ いっぴき が います。<br><span class="text-pink-300 text-base">我有一隻狗。</span></div>
-                                </div>
-                                <div class="flex gap-6">
-                                    <div class="w-8 h-8 bg-pink-500 text-white rounded-2xl flex items-center justify-center flex-shrink-0">3</div>
-                                    <div>ねこ さんびき を かっています。<br><span class="text-pink-300 text-base">我養了三隻貓。</span></div>
-                                </div>
-                            </div>
+                        <div class="bg-white p-8 rounded-3xl">
+                            <h3 class="font-bold">4. Marugoto</h3>
+                            <p class="text-gray-600">日本官方教材網站</p>
                         </div>
                     </div>
                 </div>
-            `;
-        }
-        
-        function filterByLevel(level) {
-            document.querySelectorAll('.level-tab').forEach(tab => {
-                tab.classList.remove('active', 'border-pink-400', 'text-pink-600');
-                if ((level === 'all' && tab.textContent === '全部') || 
-                    (level === 'N4' && tab.textContent === 'N4') ||
-                    (level === 'N3' && tab.textContent === 'N3')) {
-                    tab.classList.add('active', 'border-pink-400', 'text-pink-600');
+            `
+        };
+
+        function switchPage(page) {
+            document.getElementById('main-content').innerHTML = pages[page] || pages.home;
+            
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick').includes("'" + page + "'")) {
+                    link.classList.add('active');
                 }
             });
         }
-        
-        function startQuiz() {
-            alert('測驗模式開發中 🌟\n\n目前先練習「いっぴき」「さんびき」「ろっぴき」「はっぴき」這四個最重要！');
-        }
-        
-        // Initialize Tailwind and load first page
+
         window.onload = () => {
-            // Make sure tailwind classes are interpreted
-            navigateTo('home');
-            
-            console.log('%c語日俱進 growdaily — 專注日文學習', 'color:#a21caf; font-size:13px');
+            switchPage('home');
         };
     </script>
 </body>
