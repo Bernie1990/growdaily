@@ -1,0 +1,55 @@
+{
+  "id": "te-form-rendaku-nasalization",
+  "title": "て形・た形的不規則變化：用兩個音韻規則就能理解",
+  "level": ["N5", "N4"],
+  "category": "grammar",
+  "subcategory": "verb-conjugation",
+  "tags": ["て形", "た形", "音便", "連濁", "鼻音化", "rendaku", "nasalization"],
+  "lastUpdated": "2026-05-13",
+  "summary": "日語て形和た形的變化看似不規則，但其實大多可以用「連濁」和「鼻音化」兩個音韻機制解釋。掌握這兩個規則，就能大幅減少死背。",
+  "oneLiner": "て形變化不是亂變，而是為了讓發音更順暢的自然音便。",
+  "coreConcept": "日語不喜歡某些音連在一起太難念，因此會自動調整：清音變濁音（連濁）、子音變鼻音ん（鼻音化）。",
+  "rendaku": {
+    "description": "清音變濁音，讓兩個音節連接更容易。主要發生在く→いて、ぐ→いで。",
+    "keyRule": "ぐ + て → いで（因為 g+t 不好發音，所以 t 變成 d）",
+    "examples": [
+      "泳ぐ → 泳いで",
+      "急ぐ → 急いで",
+      "書く → 書いて（這裡是イ音便）"
+    ]
+  },
+  "nasalization": {
+    "description": "某些子音（m、n、b）在快速連接時會鼻音化變成「ん」。",
+    "keyRule": "む・ぬ・ぶ + て → んで",
+    "examples": [
+      "読む → 読んで",
+      "死ぬ → 死んで",
+      "遊ぶ → 遊んで"
+    ],
+    "reason": "m、n、b 本來就接近鼻音，快速發音時自然變成ん。"
+  },
+  "fullTable": [
+    { "ending": "く", "teForm": "いて", "example": "書く → 書いて", "change": "イ音便" },
+    { "ending": "ぐ", "teForm": "いで", "example": "泳ぐ → 泳いで", "change": "連濁" },
+    { "ending": "す", "teForm": "して", "example": "話す → 話して", "change": "無變化" },
+    { "ending": "む・ぶ・ぬ", "teForm": "んで", "example": "読む → 読んで", "change": "鼻音化" },
+    { "ending": "つ・る・う", "teForm": "って", "example": "待つ → 待って", "change": "促音化" }
+  ],
+  "soundChanges": [
+    { "type": "連濁（Rendaku）", "description": "清音 → 濁音", "examples": "ぐ → いで" },
+    { "type": "鼻音化（Nasalization）", "description": "子音 → ん", "examples": "む/ぶ/ぬ → んで" },
+    { "type": "促音化", "description": "促音（っ）", "examples": "つ/る/う → って" },
+    { "type": "イ音便", "description": "く → いて", "examples": "書く → 書いて" }
+  ],
+  "essence": "這些變化統稱為「音便（おんびん）」——為了讓發音更順暢而產生的自然音變。這是日語的語言本質。",
+  "specialNote": "行く（いく）變成行って（いって）是歷史音變的特例。雖然表面看起來不規則，但背後有清楚的語言演化邏輯。",
+  "learningTips": [
+    "不要死背每個動詞，先記住『結尾音 + て』的規則。",
+    "遇到新動詞時，先看結尾是く/ぐ/す/む/ぶ/ぬ/つ/る/う，再套用上面表格。",
+    "多說例句：泳いで、読んで、待って，熟悉嘴巴的感覺。",
+    "理解『為了發音順暢』這個核心概念後，て形就會變得很有邏輯。"
+  ],
+  "related": ["verb-conjugation", "ta-form", "sound-change"],
+  "source": "growdaily 社群整理（基於語言學音韻規則）",
+  "agentNote": "本篇依照 Arch_Agent 理念，以『理解機制』而非『死背』的方式整理て形變化，適合放入 N5-N4 文法分類。已包含清楚的表格、規則說明與學習建議。"
+}

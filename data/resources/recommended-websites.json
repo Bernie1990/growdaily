@@ -1,0 +1,47 @@
+{
+  "id": "recommended-websites-amber",
+  "title": "4個推薦的日文自學網站",
+  "source": "Amber.L (lemonstera.com)",
+  "level": ["N5", "N4", "N3"],
+  "category": "resources",
+  "tags": ["自學", "文法", "新聞", "教材", "官方資源"],
+  "lastUpdated": "2026-05-13",
+  "summary": "Amber.L 推薦的4個優質日文學習網站，適合從零開始自學者使用。包含文法說明、日本文化、新聞閱讀、官方教材等豐富資源。",
+  "websites": [
+    {
+      "name": "にほんごのふね (日本語の船)",
+      "url": "https://course.nihongonofune.com",
+      "description": "日語教師自設網站。提供詳細文法說明、助詞用法、日本文化介紹，內容非常豐富且有系統。",
+      "strengths": ["文法深入淺出", "文化知識", "適合初學到中級"],
+      "bestFor": "想系統學習文法和了解日本文化的同學"
+    },
+    {
+      "name": "ひろがるにほんご",
+      "url": "https://hirogaru-nihongo.jp",
+      "description": "以主題式學習為主的網站，提供豐富的閱讀和聽力材料。",
+      "strengths": ["主題式學習", "真實語料", "多樣化練習"],
+      "bestFor": "想透過有趣主題擴展日文能力的同學"
+    },
+    {
+      "name": "NHK News Web Easy",
+      "url": "https://www3.nhk.or.jp/news/easy/",
+      "description": "NHK 為日文學習者製作的簡易新聞網站。使用簡單的日文撰寫當日新聞，非常適合練習閱讀。",
+      "strengths": ["真實新聞", "附有讀音與解釋", "每日更新"],
+      "bestFor": "想提升閱讀能力、了解日本時事的同學"
+    },
+    {
+      "name": "Marugoto",
+      "url": "https://www.marugoto.org/en/",
+      "description": "日本國際交流基金會官方教材網站。提供完整線上課程與教材，下載方便。",
+      "strengths": ["官方品質保證", "系統化教材", "包含聽說讀寫"],
+      "bestFor": "想要使用正規、系統化教材的自學者"
+    }
+  ],
+  "learningTips": [
+    "從 NHK News Easy 開始，每天閱讀一篇新聞",
+    "搭配「にほんごのふね」的文法說明來理解新聞內容",
+    "使用 Marugoto 作為主要教材框架",
+    "把學到的內容記錄到我們的 growdaily 共筆中"
+  ],
+  "agentNote": "本篇由 Agent 從 Amber.L 文章整理而成，已轉換為 growdaily 工具書可直接使用的結構化格式。適合放在「資源推薦」或「自學方法」分類下。"
+}
