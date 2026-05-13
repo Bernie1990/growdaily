@@ -9,140 +9,274 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap');
         body { font-family: 'Noto Sans TC', system-ui, sans-serif; }
         .jp-text { font-family: 'Noto Serif JP', serif; }
-        .sidebar-link { transition: all 0.2s; }
-        .sidebar-link.active { background-color: #f3e8ff; color: #6b21a8; font-weight: 500; }
+        .hero-bg {
+            background: linear-gradient(135deg, #f3e8ff 0%, #fae8e8 100%);
+        }
+        .section-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .section-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+        }
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 16px 20px;
+        }
     </style>
 </head>
-<body class="bg-zinc-100">
-    <div class="flex h-screen">
-        <!-- 側欄 -->
-        <div class="w-72 bg-white border-r border-gray-200 flex flex-col">
-            <div class="p-6 border-b">
-                <div class="flex items-center gap-3">
-                    <span class="text-4xl">🌸</span>
-                    <div>
-                        <span class="text-2xl font-bold text-violet-700">語日俱進</span>
-                        <span class="block text-xs text-pink-500 -mt-1">TOOLBOOK</span>
-                    </div>
+<body class="bg-zinc-50 text-zinc-800">
+    <!-- Top Nav -->
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-8 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-4xl">🌸</span>
+                <div>
+                    <span class="text-3xl font-bold tracking-tighter text-violet-700">語日俱進</span>
+                    <span class="block text-[10px] text-pink-500 -mt-1 font-medium">GROWDAILY TOOLBOOK</span>
                 </div>
             </div>
-            
-            <div class="flex-1 overflow-auto p-3">
-                <div onclick="switchPage('home')" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer mb-1">
-                    <span class="text-lg">🏠</span>
-                    <span>首頁</span>
-                </div>
-                <div onclick="switchPage('hiki')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer mb-1">
-                    <span class="text-lg">🌸</span>
-                    <span>助數詞 - 匹（ひき）</span>
-                </div>
-                <div onclick="switchPage('godan')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer mb-1">
-                    <span class="text-lg">📋</span>
-                    <span>五段動詞與て形</span>
-                </div>
-                <div onclick="switchPage('resources')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer">
-                    <span class="text-lg">📚</span>
-                    <span>推薦學習網站</span>
-                </div>
-            </div>
-            
-            <div class="p-4 text-xs text-gray-400 border-t">
-                growdaily • 資料來自 data/ 資料夾
+            <div class="flex gap-8 text-sm font-medium">
+                <a href="#godan" class="hover:text-violet-600 transition-colors">五段動詞・て形</a>
+                <a href="#hiki" class="hover:text-violet-600 transition-colors">助數詞・匹</a>
+                <a href="#resources" class="hover:text-violet-600 transition-colors">推薦資源</a>
             </div>
         </div>
+    </nav>
 
-        <!-- 主內容區 -->
-        <div class="flex-1 overflow-auto bg-zinc-50 p-10" id="main-content">
-            <!-- JavaScript will fill this -->
+    <!-- Hero -->
+    <header class="hero-bg py-24">
+        <div class="max-w-5xl mx-auto px-8 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/70 text-violet-700 text-sm font-medium px-5 py-2 rounded-3xl mb-6">
+                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                由 Hermes Agent 自動維護
+            </div>
+            <h1 class="text-7xl font-bold text-violet-800 mb-6 tracking-tighter">用音韻理解日文</h1>
+            <p class="max-w-md mx-auto text-2xl text-zinc-600">不再死背規則。<br>掌握「連濁」與「鼻音化」，自然懂所有變化。</p>
+            <div class="mt-10 flex justify-center gap-4">
+                <a href="#godan" 
+                   class="bg-violet-700 text-white px-10 py-4 rounded-3xl font-medium hover:bg-violet-800 transition-all inline-flex items-center gap-2">
+                    開始學習五段動詞
+                    <span class="text-xl">→</span>
+                </a>
+            </div>
+            <div class="mt-16 text-xs text-zinc-500">最後更新：2026-05-13</div>
         </div>
-    </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-8 pb-24">
+        <!-- Godan Section -->
+        <section id="godan" class="mt-20 scroll-mt-20">
+            <div class="flex items-end justify-between mb-8">
+                <div>
+                    <span class="px-4 py-1 bg-violet-100 text-violet-700 text-sm font-medium rounded-3xl">GRAMMAR • N5/N4</span>
+                    <h2 class="text-5xl font-bold mt-3">五段動詞與て形音變總整理</h2>
+                </div>
+                <div id="godan-last-updated" class="text-sm text-zinc-500"></div>
+            </div>
+            
+            <div id="godan-content" class="prose prose-zinc max-w-none">
+                <!-- Dynamically filled by JS -->
+            </div>
+        </section>
+
+        <!-- Hiki Section -->
+        <section id="hiki" class="mt-28 scroll-mt-20">
+            <div class="flex items-end justify-between mb-8">
+                <div>
+                    <span class="px-4 py-1 bg-pink-100 text-pink-600 text-sm font-medium rounded-3xl">COUNTERS • N4/N3</span>
+                    <h2 class="text-5xl font-bold mt-3 jp-text">匹（ひき）</h2>
+                </div>
+                <div id="hiki-last-updated" class="text-sm text-zinc-500"></div>
+            </div>
+            <div id="hiki-content" class="prose prose-zinc max-w-none">
+                <!-- Dynamically filled by JS -->
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="mt-28 scroll-mt-20">
+            <div class="flex items-end justify-between mb-8">
+                <div>
+                    <span class="px-4 py-1 bg-amber-100 text-amber-700 text-sm font-medium rounded-3xl">RESOURCES</span>
+                    <h2 class="text-5xl font-bold mt-3">推薦學習網站</h2>
+                </div>
+                <div id="resources-last-updated" class="text-sm text-zinc-500"></div>
+            </div>
+            <div id="resources-content" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically filled by JS -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-zinc-900 text-zinc-400 py-12 text-center text-sm">
+        <div class="max-w-5xl mx-auto px-8">
+            <p>語日俱進 growdaily • 結構化日文工具書</p>
+            <p class="mt-2 text-xs">資料存放在 <span class="font-mono text-amber-300">data/</span> 資料夾 • 由 Hermes Agent 自動分類與更新</p>
+            <p class="mt-8 text-[10px]">專注「為什麼」而非「背什麼」 • 音便、連濁、鼻音化為核心</p>
+        </div>
+    </footer>
 
     <script>
-        const pages = {
-            home: `
-                <div class="max-w-2xl">
-                    <h1 class="text-5xl font-bold text-violet-700 mb-6">歡迎來到語日俱進工具書</h1>
-                    <p class="text-xl text-gray-600">這裡收集了結構化的日文學習內容，幫助你從零開始系統學習。</p>
-                    <p class="mt-8 text-sm text-gray-500">點擊左側欄目即可切換不同章節</p>
-                </div>
-            `,
+        async function loadData() {
+            try {
+                // Load Godan data
+                const godanRes = await fetch('./data/grammar/godan-te-form-complete.json');
+                const godan = await godanRes.json();
+                
+                // Load Hiki data
+                const hikiRes = await fetch('./data/counters/hiki.json');
+                const hiki = await hikiRes.json();
+                
+                // Load Resources
+                const resRes = await fetch('./data/resources/recommended-websites.json');
+                const resources = await resRes.json();
 
-            godan: `
-                <div>
-                    <h1 class="text-4xl font-bold mb-8">五段動詞與て形音變總整理</h1>
-                    <div class="prose text-lg">
-                        <p class="text-2xl text-violet-700 mb-10">日語て形的變化看似不規則，但其實可以用兩個音韻機制理解：</p>
-                        <div class="grid grid-cols-2 gap-8 mb-12">
-                            <div class="bg-purple-50 p-6 rounded-3xl">
-                                <strong class="block text-purple-700 mb-2">1. 連濁（れんだく）</strong>
-                                清音變濁音，讓兩個音節更容易連接
-                            </div>
-                            <div class="bg-pink-50 p-6 rounded-3xl">
-                                <strong class="block text-pink-700 mb-2">2. 鼻音化</strong>
-                                子音自然變成「ん」
-                            </div>
-                        </div>
-                        <h3 class="font-bold text-2xl mb-6">て形變化總表</h3>
-                        <table class="w-full border-collapse text-left text-base">
-                            <tr class="bg-gray-100"><th class="p-4">結尾</th><th class="p-4">て形</th><th class="p-4">音變類型</th></tr>
-                            <tr class="border-b"><td class="p-4">く</td><td class="jp-text p-4">いて</td><td class="p-4">イ音便</td></tr>
-                            <tr class="border-b"><td class="p-4">ぐ</td><td class="jp-text p-4">いで</td><td class="p-4">連濁</td></tr>
-                            <tr class="border-b"><td class="p-4">む・ぶ・ぬ</td><td class="jp-text p-4">んで</td><td class="p-4">鼻音化</td></tr>
-                            <tr class="border-b"><td class="p-4">つ・る・う</td><td class="jp-text p-4">って</td><td class="p-4">促音便</td></tr>
-                        </table>
-                    </div>
-                </div>
-            `,
-
-            hiki: `
-                <div>
-                    <h1 class="text-4xl font-bold mb-6 jp-text">匹（ひき）</h1>
-                    <p class="text-xl text-pink-600 mb-8">用來數小動物、魚、昆蟲的助數詞</p>
-                    <div class="bg-white p-8 rounded-3xl">
-                        <h3 class="font-bold mb-6">必背特殊形</h3>
-                        <p class="text-4xl jp-text text-pink-500">いっぴき・さんびき・ろっぴき・はっぴき</p>
-                    </div>
-                </div>
-            `,
-
-            resources: `
-                <div>
-                    <h1 class="text-4xl font-bold mb-8">推薦學習網站</h1>
-                    <div class="space-y-6">
-                        <div class="bg-white p-8 rounded-3xl">
-                            <h3 class="font-bold">1. にほんごのふね</h3>
-                            <p class="text-gray-600">文法與日本文化說明非常詳細</p>
-                        </div>
-                        <div class="bg-white p-8 rounded-3xl">
-                            <h3 class="font-bold">2. NHK News Easy</h3>
-                            <p class="text-gray-600">每天閱讀簡易新聞，練習閱讀能力</p>
-                        </div>
-                        <div class="bg-white p-8 rounded-3xl">
-                            <h3 class="font-bold">3. ひろがるにほんご</h3>
-                            <p class="text-gray-600">主題式學習</p>
-                        </div>
-                        <div class="bg-white p-8 rounded-3xl">
-                            <h3 class="font-bold">4. Marugoto</h3>
-                            <p class="text-gray-600">日本官方教材網站</p>
-                        </div>
-                    </div>
-                </div>
-            `
-        };
-
-        function switchPage(page) {
-            document.getElementById('main-content').innerHTML = pages[page] || pages.home;
-            
-            document.querySelectorAll('.sidebar-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('onclick').includes("'" + page + "'")) {
-                    link.classList.add('active');
-                }
-            });
+                renderGodan(godan);
+                renderHiki(hiki);
+                renderResources(resources);
+                
+                // Update timestamps
+                document.getElementById('godan-last-updated').textContent = `更新於 ${godan.lastUpdated || '2026-05-13'}`;
+                document.getElementById('hiki-last-updated').textContent = `更新於 ${hiki.lastUpdated || '2026-05-13'}`;
+                document.getElementById('resources-last-updated').textContent = `更新於 ${resources.lastUpdated || '2026-05-13'}`;
+            } catch (e) {
+                console.error('載入資料失敗', e);
+                document.getElementById('godan-content').innerHTML = '<p class="text-red-500">資料載入失敗，請確認 dist 資料夾結構正確。</p>';
+            }
         }
 
+        function renderGodan(data) {
+            const container = document.getElementById('godan-content');
+            let html = `
+                <div class="bg-white p-10 rounded-3xl shadow-sm">
+                    <p class="text-xl leading-relaxed text-zinc-600 mb-10">${data.summary}</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                        <div class="bg-purple-50 border border-purple-100 p-8 rounded-3xl">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-3xl">🔄</span>
+                                <h4 class="font-bold text-purple-800 text-xl">連濁（れんだく）</h4>
+                            </div>
+                            <p class="text-purple-700">${data.soundChanges.rendaku}</p>
+                        </div>
+                        <div class="bg-pink-50 border border-pink-100 p-8 rounded-3xl">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-3xl">👃</span>
+                                <h4 class="font-bold text-pink-800 text-xl">鼻音化</h4>
+                            </div>
+                            <p class="text-pink-700">${data.soundChanges.nasalization}</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-6 text-violet-800">て形變化總表</h3>
+                    <div class="overflow-x-auto mb-12">
+                        <table class="w-full bg-white border border-zinc-200 rounded-2xl overflow-hidden">
+                            <thead>
+                                <tr class="bg-zinc-100">
+                                    <th class="text-left border-b">結尾</th>
+                                    <th class="text-left border-b jp-text">て形</th>
+                                    <th class="text-left border-b">音變類型</th>
+                                    <th class="text-left border-b">範例</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            `;
+            
+            data.teFormMasterTable.forEach(row => {
+                html += `
+                    <tr class="border-b last:border-b-0 hover:bg-zinc-50">
+                        <td class="border-r font-medium">${row.ending}</td>
+                        <td class="jp-text border-r text-xl">${row.teForm}</td>
+                        <td class="border-r text-sm">${row.type}</td>
+                        <td class="text-sm text-zinc-600">${row.example}</td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="bg-amber-50 p-8 rounded-3xl">
+                        <h4 class="font-bold text-amber-800 mb-6 flex items-center gap-2">
+                            <span>💡</span> 學習重點
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            `;
+            
+            data.learningTips.forEach(tip => {
+                html += `<div class="flex gap-3 text-sm"><span class="text-amber-400">→</span><span>${tip}</span></div>`;
+            });
+            
+            html += `
+                        </div>
+                        <div class="mt-8 pt-6 border-t text-xs text-amber-600">${data.essence}</div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function renderHiki(data) {
+            const container = document.getElementById('hiki-content');
+            let html = `
+                <div class="bg-white p-10 rounded-3xl">
+                    <p class="text-xl text-pink-600 mb-8">${data.summary}</p>
+                    <div class="bg-pink-50 p-8 rounded-3xl mb-10">
+                        <div class="text-6xl jp-text font-light text-pink-500 mb-4">${data.usage.examples[0]}</div>
+                        <div class="text-zinc-500">用來數小動物、魚、昆蟲</div>
+                    </div>
+            `;
+            
+            data.rules.types.forEach(rule => {
+                html += `
+                    <div class="mb-8 last:mb-0">
+                        <div class="inline-block px-5 py-1 bg-white border border-zinc-200 rounded-3xl text-sm font-medium mb-4">${rule.name}</div>
+                        <div class="text-4xl jp-text text-pink-600 mb-3">${rule.examples.join('　')}</div>
+                        <p class="text-zinc-600">${rule.result}</p>
+                    </div>
+                `;
+            });
+            
+            html += `<div class="text-xs text-zinc-500 mt-12">${data.oneLiner}</div></div>`;
+            container.innerHTML = html;
+        }
+
+        function renderResources(data) {
+            const container = document.getElementById('resources-content');
+            let html = '';
+            
+            data.websites.forEach(site => {
+                html += `
+                    <a href="${site.url}" target="_blank" 
+                       class="section-card bg-white p-8 rounded-3xl border border-transparent hover:border-amber-200 group block">
+                        <div class="font-bold text-xl mb-3 group-hover:text-amber-700 transition-colors">${site.name}</div>
+                        <p class="text-zinc-600 text-[15px] leading-relaxed mb-6">${site.description}</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${site.strengths.map(s => `<span class="text-[10px] px-3 py-1 bg-amber-100 text-amber-700 rounded-3xl">${s}</span>`).join('')}
+                        </div>
+                    </a>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Initialize
         window.onload = () => {
-            switchPage('home');
+            loadData();
+            
+            // Tailwind script already loaded via CDN
+            tailwind.config = {
+                content: [],
+                theme: {
+                    extend: {}
+                }
+            };
         };
     </script>
 </body>

@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Japanese learning toolbook - growdaily",
   "scripts": {
-    "deploy": "wrangler pages deploy .",
+    "build": "rm -rf dist && mkdir -p dist && cp -r index.html data/ dist/ && cp -r prompts/ dist/ 2>/dev/null || true",
+    "deploy": "npm run build && wrangler pages deploy dist",
     "preview": "serve . -l 8080",
     "preview:wrangler": "wrangler pages dev ."
   },
