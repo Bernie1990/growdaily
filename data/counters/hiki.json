@@ -1,0 +1,75 @@
+{
+  "id": "counter-hiki",
+  "title": "日文助數詞音變完全整理 - 匹（ひき）",
+  "slug": "hiki",
+  "level": ["N4", "N3"],
+  "category": "counters",
+  "subcategory": "animal",
+  "tags": ["助數詞", "音便", "counters", "sandhi", "h系助數詞"],
+  "lastUpdated": "2026-05-13",
+  "updatedBy": "Agent",
+  "summary": "日文的「數量單位詞（助數詞）」本體雖然固定，但前面數字會讓它發生音變（音便）。匹（ひき）用來數小動物、魚、昆蟲。重點是記住 1,3,6,8,10 的特殊變化。",
+  "oneLiner": "數字 + ひき 會因為發音流暢而自動發生促音、連濁、半濁等音變。",
+  "usage": {
+    "description": "用來數小動物、魚、昆蟲",
+    "examples": [
+      "いっぴき の犬 (一隻狗)",
+      "さんびき の猫 (三隻貓)",
+      "ろっぴき の魚 (六隻魚)"
+    ]
+  },
+  "rules": {
+    "description": "日文不喜歡某些音連在一起太難念，因此自動調整發音。",
+    "types": [
+      {
+        "name": "促音化 (っ)",
+        "pattern": "1, 6, 8, 10",
+        "result": "っぴき",
+        "examples": ["いっぴき", "ろっぴき", "はっぴき", "じゅっぴき"]
+      },
+      {
+        "name": "連濁 (び)",
+        "pattern": "ん 結尾 (如 3さん)",
+        "result": "びき",
+        "examples": ["さんびき"]
+      },
+      {
+        "name": "普通",
+        "pattern": "其他數字",
+        "result": "ひき",
+        "examples": ["にひき", "よんひき", "ごひき"]
+      }
+    ]
+  },
+  "fullTable": [
+    { "number": "1", "theory": "いちひき", "actual": "いっぴき", "type": "促音+半濁" },
+    { "number": "2", "theory": "にひき", "actual": "にひき", "type": "普通" },
+    { "number": "3", "theory": "さんひき", "actual": "さんびき", "type": "連濁" },
+    { "number": "4", "theory": "よんひき", "actual": "よんひき", "type": "普通" },
+    { "number": "5", "theory": "ごひき", "actual": "ごひき", "type": "普通" },
+    { "number": "6", "theory": "ろくひき", "actual": "ろっぴき", "type": "促音+半濁" },
+    { "number": "7", "theory": "ななひき", "actual": "ななひき", "type": "普通" },
+    { "number": "8", "theory": "はちひき", "actual": "はっぴき", "type": "促音+半濁" },
+    { "number": "9", "theory": "きゅうひき", "actual": "きゅうひき", "type": "普通" },
+    { "number": "10", "theory": "じゅうひき", "actual": "じゅっぴき", "type": "促音+半濁" }
+  ],
+  "memoryTips": [
+    "必背 4 個特殊形：いっぴき（1）、さんびき（3）、ろっぴき（6）、はっぴき（8）",
+    "其他幾乎都念「～ひき」",
+    "記住 h 系助數詞共同規律（本、杯、匹）"
+  ],
+  "related": ["hon", "hai", "satsu", "tou"],
+  "hSystemComparison": [
+    { "counter": "匹（ひき）", "one": "いっぴき", "three": "さんびき", "six": "ろっぴき", "eight": "はっぴき", "usage": "小動物、魚、蟲" },
+    { "counter": "本（ほん）", "one": "いっぽん", "three": "さんぼん", "six": "ろっぽん", "eight": "はっぽん", "usage": "長條物（筆、瓶、傘）" },
+    { "counter": "杯（はい）", "one": "いっぱい", "three": "さんばい", "six": "ろっぱい", "eight": "はっぱい", "usage": "杯子、碗" }
+  ],
+  "linguistics": "這是人類語言普遍的連聲（Sandhi）現象，類似英文 input → imput。",
+  "learningPath": [
+    "先熟練必背 4 個特殊形",
+    "練習說完整例句",
+    "遇到其他 h 系助數詞時用相同規則類推"
+  ],
+  "source": "https://hackmd.io/@HelloBernie/SyuziiWkMg",
+  "agentNote": "本篇由 Agent 根據 Arch_Agent 理念進行結構化整理，支援多維度分類（程度：N4-N3、詞性：助數詞、用途：動物計數）。未來可自動與其他助數詞交叉連結。"
+}

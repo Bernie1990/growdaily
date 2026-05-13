@@ -1,0 +1,22 @@
+{
+  "title": "語日俱進 Toolbook",
+  "description": "由 Agent 自動維護的日文學習工具書 • 支援多維度分類",
+  "lastUpdated": "2026-05-13",
+  "totalEntries": 1,
+  "categories": {
+    "byLevel": ["N5", "N4", "N3", "N2", "N1"],
+    "byType": ["counters", "grammar", "vocabulary", "particles"],
+    "byUsage": ["daily", "animal", "exam", "travel"]
+  },
+  "entries": [
+    {
+      "id": "counter-hiki",
+      "title": "日文助數詞音變完全整理 - 匹（ひき）",
+      "level": ["N4", "N3"],
+      "type": "counters",
+      "usage": "animal",
+      "slug": "hiki",
+      "lastUpdated": "2026-05-13"
+    }
+  ]
+}

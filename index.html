@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>語日俱進 Toolbook • Agent 自動化學習系統</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&amp;family=Noto+Serif+JP:wght@400;500;700&amp;display=swap');
+        
+        :root {
+            --jp-red: #e63946;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', system-ui, sans-serif;
+        }
+        
+        .jp-text {
+            font-family: 'Noto Serif JP', serif;
+        }
+
+        .toolbook-card {
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        
+        .toolbook-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        .kana {
+            color: #e63946;
+            font-weight: 500;
+        }
+
+        .section-header {
+            position: relative;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 48px;
+            height: 3px;
+            background: linear-gradient(to right, #e63946, #f97316);
+            border-radius: 9999px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 14px 16px;
+        }
+        
+        tr:hover {
+            background-color: #fef2f2;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-72 bg-zinc-900 border-r border-zinc-800 flex flex-col">
+            <div class="p-6 border-b border-zinc-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-red-500 text-white rounded-2xl flex items-center justify-center text-3xl font-bold leading-none pt-0.5">語</div>
+                    <div>
+                        <div class="text-2xl font-bold tracking-tighter">語日俱進</div>
+                        <div class="text-[10px] text-emerald-400 -mt-1 font-mono">TOOLBOOK v0.1</div>
+                    </div>
+                </div>
+                <div class="mt-2 text-xs text-zinc-500">Arch_Agent 驅動 • HackMD 同步</div>
+            </div>
+            
+            <div class="p-3 flex-1 overflow-auto">
+                <a href="#" onclick="navigateTo('home')" 
+                   class="nav-item flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 rounded-2xl text-sm font-medium active">
+                    <i class="fa-solid fa-house w-4"></i>
+                    <span>首頁</span>
+                </a>
+                <a href="#" onclick="navigateTo('toolbook')" 
+                   class="nav-item flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 rounded-2xl text-sm font-medium">
+                    <i class="fa-solid fa-book w-4"></i>
+                    <span>工具書</span>
+                </a>
+                <a href="#" onclick="navigateTo('database')" 
+                   class="nav-item flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 rounded-2xl text-sm font-medium">
+                    <i class="fa-solid fa-database w-4"></i>
+                    <span>資料庫</span>
+                </a>
+                <a href="#" onclick="navigateTo('prompts')" 
+                   class="nav-item flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 rounded-2xl text-sm font-medium">
+                    <i class="fa-solid fa-wand-magic-sparkles w-4"></i>
+                    <span>Agent Prompts</span>
+                </a>
+            </div>
+            
+            <div class="p-4 border-t border-zinc-800 text-[10px] text-zinc-500">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    Agent Online
+                </div>
+                <div class="mt-4 text-xs">最後更新: 2026-05-13</div>
+                <div class="text-[10px] mt-1">資料來源: HackMD + Agent 自動分類</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto" id="main-content">
+            <!-- Home Page -->
+            <div id="page-home" class="p-10">
+                <div class="max-w-5xl mx-auto">
+                    <div class="mb-16">
+                        <span class="px-5 py-2 bg-red-500/10 text-red-400 text-sm font-medium rounded-3xl">Arch_Agent 理念實作</span>
+                        <h1 class="text-6xl font-bold mt-6 leading-none">日文工具書</h1>
+                        <p class="text-2xl text-zinc-400 mt-4">由 Agent 自動整理 • 多維度分類 • 容易學習的介面</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-6">
+                        <div onclick="navigateTo('toolbook')" 
+                             class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 p-8 rounded-3xl toolbook-card cursor-pointer">
+                            <div class="text-red-400 text-4xl mb-6">📚</div>
+                            <h3 class="text-xl font-semibold mb-2">工具書瀏覽器</h3>
+                            <p class="text-zinc-400">結構化呈現助數詞、 文法、單字。支援篩選與互動學習。</p>
+                            <div class="text-xs mt-8 text-emerald-400 flex items-center gap-2">
+                                <span class="bg-emerald-900 px-3 py-1 rounded-2xl">N4-N3 助數詞</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-zinc-900 border border-zinc-700 p-8 rounded-3xl">
+                            <div class="text-amber-400 text-4xl mb-6">🧠</div>
+                            <h3 class="text-xl font-semibold mb-2">Agent 自動維護</h3>
+                            <p class="text-zinc-400">依照 Arch_Agent.md 定義的使用者分類偏好，自動將新內容放入正確位置。</p>
+                            <div class="mt-8 text-xs opacity-60">prompts/ + data/ 為未來自動化準備</div>
+                        </div>
+                        
+                        <div onclick="navigateTo('database')" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 p-8 rounded-3xl toolbook-card cursor-pointer">
+                            <div class="text-sky-400 text-4xl mb-6">💾</div>
+                            <h3 class="text-xl font-semibold mb-2">靜態資料庫</h3>
+                            <p class="text-zinc-400">所有內容以 JSON 格式儲存於 Cloudflare Pages，確保高速載入與離線可用。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-20">
+                        <h2 class="text-xl font-medium mb-6 flex items-center gap-3">
+                            <span class="text-red-400">🌸</span> 第一篇已整理完成：匹（ひき）
+                        </h2>
+                        <div class="bg-zinc-900 rounded-3xl p-8 border border-zinc-700">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="inline-flex items-center gap-2 px-4 py-1 bg-red-500/10 text-red-400 rounded-3xl text-sm">
+                                        N4～N3 • 助數詞
+                                    </div>
+                                    <h3 class="text-3xl font-bold mt-4 jp-text">匹（ひき）</h3>
+                                    <p class="text-zinc-400 mt-2">小動物・魚・昆蟲的計數單位 • 音便規律完整整理</p>
+                                </div>
+                                <button onclick="navigateTo('toolbook'); loadEntry('counter-hiki')" 
+                                        class="px-8 py-4 bg-white text-zinc-900 rounded-2xl font-medium hover:bg-amber-200 transition">
+                                    立即閱讀 →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toolbook Page -->
+            <div id="page-toolbook" class="hidden p-10">
+                <div class="max-w-6xl mx-auto">
+                    <div class="flex justify-between items-end mb-10">
+                        <div>
+                            <h1 class="text-5xl font-bold">工具書</h1>
+                            <p class="text-zinc-400">多維度分類 • Agent 整理 • 容易記憶的互動介面</p>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <input id="search-input" 
+                                   onkeyup="if(event.key === 'Enter') filterContent()"
+                                   type="text" 
+                                   placeholder="搜尋助數詞、文法..." 
+                                   class="bg-zinc-900 border border-zinc-700 focus:border-red-400 rounded-3xl px-6 py-3 w-80 outline-none">
+                            <button onclick="filterContent()" 
+                                    class="px-8 bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 rounded-3xl">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-8">
+                        <!-- Content View -->
+                        <div class="flex-1" id="content-view">
+                            <div id="entry-detail" class="bg-zinc-900 rounded-3xl p-10"></div>
+                        </div>
+                        
+                        <!-- Sidebar Filters -->
+                        <div class="w-80 flex-shrink-0">
+                            <div class="sticky top-6">
+                                <div class="bg-zinc-900 rounded-3xl p-6 border border-zinc-700">
+                                    <h4 class="font-medium mb-4 text-red-400">分類篩選</h4>
+                                    
+                                    <div class="space-y-6">
+                                        <div>
+                                            <div class="text-xs uppercase tracking-widest text-zinc-500 mb-3">程度</div>
+                                            <div class="flex flex-wrap gap-2">
+                                                <span onclick="toggleFilter(this)" class="level-badge active px-4 py-1 text-xs rounded-3xl border border-red-400 text-red-400 cursor-pointer">N4</span>
+                                                <span onclick="toggleFilter(this)" class="level-badge px-4 py-1 text-xs rounded-3xl border border-zinc-600 hover:border-zinc-400 cursor-pointer">N3</span>
+                                                <span onclick="toggleFilter(this)" class="level-badge px-4 py-1 text-xs rounded-3xl border border-zinc-600 hover:border-zinc-400 cursor-pointer">N5</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <div class="text-xs uppercase tracking-widest text-zinc-500 mb-3">類型</div>
+                                            <div class="text-sm space-y-2">
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" checked class="accent-red-500"> 助數詞 (Counters)
+                                                </label>
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" class="accent-red-500"> 文法
+                                                </label>
+                                                <label class="flex items-center gap-2 cursor-pointer">
+                                                    <input type="checkbox" class="accent-red-500"> 單字
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div onclick="showAllEntries()" 
+                                     class="mt-6 text-center text-xs py-4 border border-dashed border-zinc-700 hover:border-zinc-400 rounded-3xl cursor-pointer">
+                                    查看全部條目 (1)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Database Page -->
+            <div id="page-database" class="hidden p-10 max-w-5xl mx-auto">
+                <h1 class="text-4xl font-bold mb-2">資料庫結構</h1>
+                <p class="text-zinc-400 mb-10">本資料夾存放 Cloudflare 靜態資料庫 • 符合 Arch_Agent 結構化需求</p>
+                
+                <div class="bg-zinc-900 rounded-3xl p-8 font-mono text-sm">
+                    <div class="text-emerald-400 mb-4">├── data/</div>
+                    <div class="pl-6">
+                        <div class="text-sky-400">├── index.json <span class="text-zinc-500">(目錄總表)</span></div>
+                        <div class="text-sky-400">└── counters/</div>
+                        <div class="pl-6 text-amber-300">└── hiki.json <span class="text-zinc-500">(本篇完整結構化資料)</span></div>
+                    </div>
+                    <div class="text-emerald-400 mt-8">├── prompts/</div>
+                    <div class="pl-6 text-violet-300">└── classify-content.prompt</div>
+                </div>
+                
+                <div class="mt-12">
+                    <h3 class="font-medium mb-4">本篇內容 JSON 結構預覽</h3>
+                    <pre id="json-preview" class="bg-black p-8 rounded-3xl text-xs text-emerald-200 overflow-auto max-h-96 font-mono leading-relaxed"></pre>
+                </div>
+            </div>
+
+            <!-- Prompts Page -->
+            <div id="page-prompts" class="hidden p-10 max-w-4xl mx-auto">
+                <h1 class="text-4xl font-bold mb-8">Agent 自動化 Prompts</h1>
+                <div class="prose prose-invert">
+                    <p class="text-zinc-400">此資料夾存放未來用於自動更新工具書的 prompt 模板，符合 Arch_Agent.md 中「使用者自訂分類體系」與「Link-to-Structured-Content Pipeline」的精神。</p>
+                    
+                    <div class="mt-12 bg-zinc-900 rounded-3xl p-8">
+                        <div class="flex items-center gap-4 mb-6">
+                            <span class="px-4 py-2 bg-violet-500 text-white text-xs rounded-3xl">classify-content.prompt</span>
+                        </div>
+                        <p class="text-sm text-zinc-400 leading-relaxed">
+                            這個 prompt 讓 Agent 能夠根據你定義的分類偏好（程度、詞性、用途），自動將新內容整理成結構化 JSON，存入 <code class="bg-black px-1.5 py-0.5 rounded">data/</code> 目錄，並可進一步同步至 HackMD。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentEntry = null;
+        
+        async function loadEntry(id) {
+            const res = await fetch('data/counters/hiki.json');
+            currentEntry = await res.json();
+            renderEntry(currentEntry);
+        }
+        
+        function renderEntry(entry) {
+            const container = document.getElementById('entry-detail');
+            container.innerHTML = `
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <span class="px-5 py-1.5 bg-red-500/10 text-red-400 text-xs tracking-widest rounded-3xl">${entry.level.join('・')}</span>
+                        <h1 class="text-4xl font-bold jp-text mt-4">${entry.title}</h1>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs text-emerald-400">Agent 更新</div>
+                        <div class="text-xs text-zinc-500">${entry.lastUpdated}</div>
+                    </div>
+                </div>
+                
+                <div class="prose prose-invert max-w-none">
+                    <div class="bg-zinc-800 border-l-4 border-red-400 p-6 mb-10 rounded-r-3xl">
+                        <strong class="block text-red-300 mb-2">一句話總結</strong>
+                        <p class="text-lg">${entry.oneLiner}</p>
+                    </div>
+                    
+                    <h3 class="section-header text-2xl font-semibold mb-6">基本用途</h3>
+                    <p class="text-zinc-300">${entry.usage.description}</p>
+                    <ul class="list-disc pl-6 mt-4 space-y-2">
+                        ${entry.usage.examples.map(ex => `<li class="text-emerald-300">${ex}</li>`).join('')}
+                    </ul>
+                    
+                    <h3 class="section-header text-2xl font-semibold mt-16 mb-6">完整變化表</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-zinc-700 text-left text-xs text-zinc-400">
+                                    <th>數字</th>
+                                    <th>理論發音</th>
+                                    <th class="text-red-400">實際發音</th>
+                                    <th>類型</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-zinc-200">
+                                ${entry.fullTable.map(row => `
+                                    <tr class="border-b border-zinc-800 hover:bg-red-950/30">
+                                        <td class="font-medium">${row.number}匹</td>
+                                        <td class="jp-text text-zinc-400">${row.theory}</td>
+                                        <td class="jp-text font-bold kana">${row.actual}</td>
+                                        <td class="text-xs">${row.type}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 class="section-header text-2xl font-semibold mt-16 mb-6">記憶技巧</h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        ${entry.memoryTips.map((tip, i) => `
+                            <div class="bg-zinc-800/70 border border-amber-400/30 p-6 rounded-3xl flex gap-5">
+                                <div class="text-3xl text-amber-400 w-8">0${i+1}</div>
+                                <div>${tip}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <h3 class="section-header text-2xl font-semibold mt-16 mb-6">h 系助數詞共通規律</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-zinc-700 text-left text-xs text-zinc-400">
+                                    <th>助數詞</th>
+                                    <th>1</th>
+                                    <th>3</th>
+                                    <th>6</th>
+                                    <th>8</th>
+                                    <th>用途</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${entry.hSystemComparison.map(item => `
+                                    <tr class="border-b border-zinc-700">
+                                        <td class="font-medium">${item.counter}</td>
+                                        <td class="jp-text">${item.one}</td>
+                                        <td class="jp-text">${item.three}</td>
+                                        <td class="jp-text">${item.six}</td>
+                                        <td class="jp-text">${item.eight}</td>
+                                        <td class="text-xs text-zinc-400">${item.usage}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-16 bg-zinc-950 border border-zinc-700 rounded-3xl p-8 text-sm">
+                        <div class="italic text-zinc-400">"${entry.linguistics}"</div>
+                        <div class="text-[10px] text-right mt-6 text-zinc-500">— 語言學小知識</div>
+                    </div>
+                    
+                    <div class="mt-12 pt-8 border-t border-zinc-700 flex justify-between text-xs">
+                        <div>
+                            <span class="text-zinc-500">來源：</span> 
+                            <a href="${entry.source}" target="_blank" class="text-sky-400 hover:underline">HackMD 共筆</a>
+                        </div>
+                        <div class="text-emerald-400">由 Agent 依照 Arch_Agent 架構整理</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function navigateTo(page) {
+            document.querySelectorAll('#main-content > div').forEach(div => {
+                div.classList.add('hidden');
+            });
+            document.getElementById(`page-${page}`).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active', 'bg-zinc-800'));
+            
+            if (page === 'toolbook') {
+                if (!currentEntry) loadEntry('counter-hiki');
+            } else if (page === 'database') {
+                fetch('data/counters/hiki.json')
+                    .then(r => r.text())
+                    .then(text => {
+                        document.getElementById('json-preview').textContent = text;
+                    });
+            }
+        }
+        
+        function filterContent() {
+            const term = document.getElementById('search-input').value.toLowerCase();
+            if (!currentEntry) return;
+            if (term === '') {
+                renderEntry(currentEntry);
+                return;
+            }
+            // Simple client-side search simulation
+            const container = document.getElementById('entry-detail');
+            container.innerHTML = `<div class="p-12 text-center text-zinc-400">找到與「${term}」相關的片段...</div>`;
+            setTimeout(() => renderEntry(currentEntry), 800);
+        }
+        
+        function toggleFilter(el) {
+            el.classList.toggle('active');
+            el.classList.toggle('border-red-400');
+            el.classList.toggle('text-red-400');
+            el.classList.toggle('border-zinc-600');
+        }
+        
+        function showAllEntries() {
+            alert('目前僅收錄第一篇「匹（ひき）」。\n\n未來 Agent 會自動從 HackMD 抓取更多內容並分類。');
+        }
+        
+        // Tailwind script
+        function initTailwind() {
+            // Already configured via CDN
+        }
+        
+        window.onload = function() {
+            initTailwind();
+            navigateTo('home');
+            console.log('%c語日俱進 Toolbook 已載入 • 符合 Arch_Agent 理念', 'color:#f43f5e; font-family:monospace');
+        };
+    </script>
+</body>
+</html>
