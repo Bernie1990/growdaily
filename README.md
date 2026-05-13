@@ -5,31 +5,52 @@
 
 ## 最新修正 (2026-05-13)
 
-**問題已定位**：Cloudflare Pages 仍在執行 `npx wrangler deploy`（Worker 模式），而不是 `wrangler pages deploy dist` 或純靜態 Pages 流程。
+**問題已定位**：Cloudflare Pages 仍在執行 `npx wrangler deploy` 而非使用 Pages build 設定，導致 `assets.directory` 或配置找不到 `dist/`。
 
-這導致 wrangler 把專案當成 Worker 部署，缺少 entry point 或 assets 配置。
+**最新修正**：已更新 `wrangler.jsonc` 使用標準 `pages.build` 配置（符合 cloudflare-pages-static-site-setup skill 建議）。
 
 ### 立即修正步驟（Cloudflare Dashboard）
 
 1. 前往 https://pages.cloudflare.com/
 2. 選擇你的 **growdaily** 專案
 3. 點擊 **Settings** → **Build and deployments**
-4. 點擊 **Edit**（在 Production / Preview 分頁）
+4. 點擊 **Edit**（Production 與 Preview 分別設定）
 5. **重要修改**：
 
-   - **Build command**：改成 `npm run build`
-   - **Build output directory**：改成 `dist`
-   - **Deploy command**：**清空或移除** `npx wrangler deploy`（這是最主要問題！）
+   - **Build command**：`npm run build`
+   - **Build output directory**：`dist`
+   - **Deploy command**：**完全清空**（移除 `npx wrangler deploy`）
    - **Root directory**：留空
 
-6. 點擊 **Save**，然後點擊 **Redeploy**。
+6. 點擊 **Save** 並 **Redeploy**。
 
-### 專案已更新的部分
+### 目前專案配置（已更新）
 
-- `wrangler.jsonc` 已改回使用 `"assets": {"directory": "./dist"}`（符合 wrangler 建議）
-- `package.json` 的 `deploy` script 使用正確的 `wrangler pages deploy dist`
-- `.gitignore` / `.wranglerignore` 已排除所有不該上傳的檔案（node_modules、workerd binary 等）
-- Build script 確保 `dist/` 只包含乾淨的靜態檔案
+- `wrangler.jsonc`：使用 `"pages": {"build": {"command": "npm run build", "output_dir": "dist"}}`
+- `package.json`：包含正確的 `build` 與 `deploy` scripts
+- `.wranglerignore` + `.gitignore`：已排除 node_modules、.wrangler、dist 等，避免 asset too large 或污染
+- Build script：乾淨複製 `index.html` + `data/` 到 `dist/`
+
+### 本地測試指令
+
+```bash
+npm install
+npm run build          # 產生 dist/ 並驗證
+npm run preview        # 用 serve 測試靜態站台
+# 或
+npm run deploy         # 直接部署（需 wrangler login）
+```
+
+或純 wrangler：
+```bash
+npx wrangler pages deploy dist
+```
+
+### 驗證
+
+- `ls dist/` 應看到 `index.html` + `data/` 資料夾
+- 部署後網站應正常載入 JSON 並顯示「五段動詞與て形音變總整理」等內容
+- 不應再出現 "assets.directory does not exist" 或 workerd binary 過大錯誤
 
 ### 本地測試
 
