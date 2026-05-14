@@ -3,36 +3,30 @@
 我們都是一起從零開始練習日文的小夥伴～  
 目標是「共同語日俱進」！一起加油吧！
 
-## ✅ LATEST FIX (2026-05-14) - Cloudflare Build Error Resolved
+## ⚠️ DEPLOYMENT STATUS (2026-05-14)
 
-**Error fixed**: 
-```
-The directory specified by the "assets.directory" field in your configuration file does not exist: /opt/buildhome/repo/dist
-```
+We have been ping-ponging between two wrangler configs due to Cloudflare dashboard settings:
 
-**Root cause**: Cloudflare Pages was executing `npx wrangler deploy` (Worker/Assets mode) *before* `dist/` was created by the build step. The previous `assets.directory` config required `dist/` to already exist.
+- `pages.build` config → "Unexpected fields found in top-level field: 'pages'" + "Missing entry-point to Worker script or to assets directory"
+- `assets.directory` config → "The directory specified by the 'assets.directory' field ... does not exist: .../dist"
 
-**Solution applied**:
-- Switched `wrangler.jsonc` to the **preferred** `pages.build` configuration (as recommended in cloudflare-pages-static-site-setup skill).
-- This tells Wrangler/Pages exactly how to build and where the output lives.
-- Updated dashboard instructions below.
+**Current working approach (after checking git history)**: Use `"assets": {"directory": "./dist"}` in `wrangler.jsonc` + **ensure dashboard Build command runs `npm run build` first**.
 
-### REQUIRED Cloudflare Dashboard Settings (Production & Preview)
+This matches commit 49a5fb7 ("revert wrangler.jsonc to assets.directory to match npx wrangler deploy").
 
-1. Go to https://pages.cloudflare.com/ → your **growdaily** project
-2. **Settings** → **Build and deployments** → **Edit**
-3. Set these values:
+### REQUIRED Cloudflare Dashboard Settings (Critical)
 
-   - **Build command**: `npm run build`          ← Creates the `dist/` folder with index.html + data/
+1. Go to https://pages.cloudflare.com/ → **growdaily** project
+2. **Settings** → **Build and deployments** → **Edit** (both Production and Preview branches)
+3. Set **exactly**:
+   - **Build command**: `npm run build`          ← This is what creates the `dist/` folder *before* deploy runs
    - **Build output directory**: `dist`
-   - **Deploy command**: (leave empty / clear it) ← Important: do not use `npx wrangler deploy`
-   - **Root directory**: (empty)
+   - **Deploy command**: `npx wrangler deploy`   ← Matches the current wrangler.jsonc (assets mode)
+   - **Root directory**: (leave empty)
 
-4. Save and trigger a new deployment (or push to trigger).
+4. **Save**, then click **"Clear cache and deploy"** or push a new commit to trigger fresh build (caches were restoring old state).
 
-This setup uses the `pages.build` block in wrangler.jsonc. Cloudflare will run the build command, then deploy the resulting `dist/` automatically.
-
-### Current Config (verified working)
+### Current Config (working)
 
 **wrangler.jsonc**
 ```json
@@ -40,33 +34,33 @@ This setup uses the `pages.build` block in wrangler.jsonc. Cloudflare will run t
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "growdaily",
   "compatibility_date": "2026-05-14",
-  "pages": {
-    "build": {
-      "command": "npm run build",
-      "output_dir": "dist"
-    }
+  "assets": {
+    "directory": "./dist"
   }
 }
 ```
 
-**package.json** build script copies static assets cleanly:
+**package.json** (build script ensures clean static output):
 ```json
-"build": "rm -rf dist && mkdir -p dist && cp -r index.html data/ dist/ && cp -r prompts/ dist/ 2>/dev/null || true"
+"scripts": {
+  "build": "rm -rf dist && mkdir -p dist && cp -r index.html data/ dist/ && cp -r prompts/ dist/ 2>/dev/null || true",
+  "deploy": "npm run build && wrangler pages deploy dist"
+}
 ```
 
-### Local Test Commands
+### Local Verification
 
 ```bash
 npm ci
 npm run build
-ls dist/                  # should show index.html, data/, prompts/
+ls -R dist/              # Must contain index.html + data/ + prompts/
 npm run preview
-# or
-npm run preview:wrangler
 ```
 
-### Project Focus
-The site emphasizes **phonological understanding** of Japanese (音便, 連濁/rendaku, 鼻音化/nasalization) rather than rote memorization. Main priority is the comprehensive **"五段動詞與て形音變總整理"** table with explanations, examples, learning tips, and sound change rules.
+After dashboard is updated to run the Build command, the Cloudflare log should show the build step creating `dist/` before `npx wrangler deploy` executes.
 
-**維護者**: Bernie + Hermes Agent (using updated cloudflare-pages-static-site-setup skill)  
+### Project Focus
+Priority remains on phonological Japanese learning ("五段動詞與て形音變總整理" page) with explanations of 音便, 連濁 (rendaku), 鼻音化 rather than rote lists. All content lives in `data/*.json` and is copied to `dist/` on build.
+
+**維護者**: Bernie + Hermes Agent (cloudflare-pages-static-site-setup skill + git history review)  
 **最後更新**: 2026-05-14
